@@ -4,6 +4,7 @@ class Movie
 {
     private string $titolo;
     private int $anno;
+    public array $genere;
 
     public function __construct(string $_titolo)
     {
@@ -29,27 +30,52 @@ class Movie
     {
         return $this->anno;
     }
+
+    public function setMovieGenere(int $_genere): void
+    {
+        $this->anno = $_genere;
+    }
+
+    public function getMovieGenere(): array
+    {
+        return $this->genere;
+    }
 }
 
 $fight_club = new Movie('Fight Club');
 $il_gladiatore = new Movie('Il Gladiatore');
 
-//Gestiscto un exception per settare l'anno di un Movie
+//Gestiscto due exception per settare l'anno di un Movie
 try {
     //presupponiamo che questo valore arrivi tramite input utente
-    // $input = 'stringa prova;
-    $input = 1999;
-    if (!is_int($input)) {
+    $inputGiusto = 1999;
+    if (!is_int($inputGiusto)) {
         throw new Exception('Is not a number');
     } else {
         // funzione riutilizzabile, basta parametrizzare l'else 
         // $object->setMovieAnno($input);
-        $fight_club->setMovieAnno($input);
-        $il_gladiatore->setMovieAnno($input);
+        $fight_club->setMovieAnno($inputGiusto);
     }
 } catch (Exception $e) {
     echo 'Eccezione: ' . $e->getMessage();
 }
+
+try {
+    //presupponiamo che questo valore arrivi tramite input utente
+    $inputSbagliato = 'prova';
+    if (!is_int($inputSbagliato)) {
+        throw new Exception('Is not a number');
+    } else {
+        // funzione riutilizzabile, basta parametrizzare l'else 
+        // $object->setMovieAnno($input);
+        $il_gladiatore->setMovieAnno($inputSbagliato);
+    }
+} catch (Exception $e) {
+    echo 'Eccezione: ' . $e->getMessage();
+}
+
+
+
 
 
 
