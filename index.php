@@ -1,95 +1,66 @@
 <?php
 
-class Movie
-{
-    private string $titolo;
-    private int $anno;
-    private array $genere = [];
+require_once __DIR__ . '/Models/Movie.php';
 
-    public function __construct(string $_titolo)
-    {
-        $this->titolo = $_titolo;
-    }
+require_once __DIR__ . '/function.php';
 
-    public function setMovieTitle(string $_titolo): void
-    {
-        $this->titolo = $_titolo;
-    }
-
-    public function getMovieTitle(): string
-    {
-        return $this->titolo;
-    }
-
-    public function setMovieAnno(int $_anno): void
-    {
-        $this->anno = $_anno;
-    }
-
-    public function getMovieAnno(): int
-    {
-        return $this->anno;
-    }
-
-    public function setMovieGenere(array $_genere): void
-    {
-        $this->genere = $_genere;
-    }
-
-    public function getMovieGenere(): array
-    {
-        return $this->genere;
-    }
-
-    public function addMovieGenere(string $_genere): void
-    {
-        $this->genere[] = $_genere;
-    }
-}
-
-$fight_club = new Movie('Fight Club');
-$il_gladiatore = new Movie('Il Gladiatore');
-
-//Gestisco due exception per settare l'anno di un Movie
-try {
-    //presupponiamo che questo valore arrivi tramite input utente
-    $inputGiusto = 1999;
-    if (!is_int($inputGiusto)) {
-        throw new Exception('Is not a number');
-    } else {
-        // funzione riutilizzabile, basta parametrizzare l'else 
-        // $object->setMovieAnno($input);
-        $fight_club->setMovieAnno($inputGiusto);
-    }
-} catch (Exception $e) {
-    echo 'Eccezione: ' . $e->getMessage();
-}
-
-try {
-    //presupponiamo che questo valore arrivi tramite input utente
-    $inputSbagliato = 'prova';
-    if (!is_int($inputSbagliato)) {
-        throw new Exception('Is not a number');
-    } else {
-        // funzione riutilizzabile, basta parametrizzare l'else 
-        // $object->setMovieAnno($input);
-        $il_gladiatore->setMovieAnno($inputSbagliato);
-    }
-} catch (Exception $e) {
-    echo 'Eccezione: ' . $e->getMessage();
-}
-
-// metodo set
-$fight_club->setMovieGenere(['Drama', 'Action']);
-$il_gladiatore->setMovieGenere(['Historical', 'Adventure', 'Drama']);
-// metodo add, la differenza è chiara
-$fight_club->addMovieGenere('Psychological');
-$fight_club->addMovieGenere('Yellow');
-$il_gladiatore->addMovieGenere('Action');
-$il_gladiatore->addMovieGenere('Compelling');
+$fight_club = createMovie('https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 'Fight Club', 1999, ['Drama', 'Action'], ['Psychological', 'Yellow']);
+$il_gladiatore = createMovie('https://italyformovies.it/app/img/film/locandine/il_gladiatore_locandina_1546942592.webp', 'Il Gladiatore', 2001, ['Historical', 'Adventure', 'Drama'], ['Action', 'Compelling']);
+$we_were_soldier = createMovie('https://m.media-amazon.com/images/S/pv-target-images/9f6c4ad7118bad5771bc4b5bd0226540fac8ed7766b2b6abb40730565abef824.jpg', 'We Were Soldier', 'prova', ['Historical', 'Adventure', 'Drama'], ['Action', 'War']);
+$troy = createMovie('https://m.media-amazon.com/images/M/MV5BMTk5MzU1MDMwMF5BMl5BanBnXkFtZTcwNjczODMzMw@@._V1_.jpg', 'Troy', 2002, ['Historical', 'Adventure', 'Drama'], ['Action', 'Adult']);
 
 
-// stampa dei risultati
-var_dump($fight_club);
-echo '<br>';
-var_dump($il_gladiatore);
+
+$movies = array_filter([$fight_club, $il_gladiatore, $we_were_soldier, $troy]);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <title>OOP Movie</title>
+</head>
+
+<body>
+    <div class="container text-center">
+        <header>
+            <h2 class="my-3">OOP Movie DB</h2>
+        </header>
+        <main>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+                <?php foreach ($movies as $movie) : ?>
+                    <div class="col mb-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-img">
+                                    <img src="<?php echo $movie->getMovieUrl() ?>" alt="<?php echo $movie->getMovieUrl() ?>">
+                                </div>
+                                <h5 class="card-title"><?php echo htmlspecialchars($movie->getMovieTitle(), ENT_QUOTES, 'UTF-8'); ?></h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <?php
+                                    try {
+                                        echo htmlspecialchars($movie->getMovieAnno(), ENT_QUOTES, 'UTF-8');
+                                    } catch (Exception $e) {
+                                        echo 'Anno non disponibile';
+                                    }
+                                    ?>
+                                </h6>
+                                <p class="card-text">
+                                    <?php echo implode(', ', array_map('htmlspecialchars', $movie->getMovieGenere())); ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </main>
+        <footer></footer>
+    </div>
+
+</body>
+
+</html>

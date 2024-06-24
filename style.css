@@ -1,0 +1,17 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.col {
+  padding: 90px;
+}
+
+.card {
+  min-height: 500px;
+}
+
+.card-img > img {
+  width: 100%;
+}
