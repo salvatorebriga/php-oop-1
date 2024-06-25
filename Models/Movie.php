@@ -6,13 +6,15 @@ class Movie
     private string $titolo;
     private int $anno;
     private array $genere = [];
+    private Actor $actor;
 
-    public function __construct(string $_url, string $_titolo, int $_anno, array $_genere)
+    public function __construct(string $_url, string $_titolo, int $_anno, array $_genere, Actor $_actor)
     {
         $this->setMovieUrl($_url);
         $this->setMovieTitle($_titolo);
         $this->setMovieAnno($_anno);
         $this->setMovieGenere($_genere);
+        $this->actor = $_actor;
     }
 
     public function setMovieUrl(string $_url): void
@@ -26,11 +28,7 @@ class Movie
 
     public function getMovieUrl(): string
     {
-        if (!is_string($this->url)) {
-            throw new Error("Dato errato");
-        } else {
-            return $this->url;
-        }
+        return $this->url;
     }
 
     public function setMovieTitle(string $_titolo): void
@@ -44,11 +42,7 @@ class Movie
 
     public function getMovieTitle(): string
     {
-        if (!is_string($this->titolo)) {
-            throw new Error("Dato errato");
-        } else {
-            return $this->titolo;
-        }
+        return $this->titolo;
     }
 
     public function setMovieAnno(int $_anno): void
@@ -62,11 +56,7 @@ class Movie
 
     public function getMovieAnno(): int
     {
-        if (!is_int($this->anno)) {
-            throw new Error("Dato errato");
-        } else {
-            return $this->anno;
-        }
+        return $this->anno;
     }
 
     public function setMovieGenere(array $_genere): void
@@ -80,11 +70,7 @@ class Movie
 
     public function getMovieGenere(): array
     {
-        if (!is_array($this->genere)) {
-            throw new Error("Dato errato");
-        } else {
-            return $this->genere;
-        }
+        return $this->genere;
     }
 
     public function addMovieGenere(string $_genere): void
@@ -94,5 +80,10 @@ class Movie
         } else {
             $this->genere[] = $_genere;
         }
+    }
+
+    public function getActor(): Actor
+    {
+        return $this->actor;
     }
 }

@@ -1,29 +1,63 @@
 <?php
 
 require_once __DIR__ . '/Models/Movie.php';
+require_once __DIR__ . '/Models/Actor.php';
 
 require_once __DIR__ . '/function.php';
 
 try {
-    $fight_club = createMovie('https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 'Fight Club', 1999, ['Drama', 'Action'], ['Psychological', 'Yellow']);
+    $fight_club = createMovie(
+        'https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg',
+        'Fight Club',
+        1999,
+        "Jon",
+        20,
+        ['Drama', 'Action'],
+        ['Psychological', 'Yellow'],
+    );
 } catch (Error $e) {
     echo $e->getMessage();
 }
 
 try {
-    $il_gladiatore = createMovie('https://italyformovies.it/app/img/film/locandine/il_gladiatore_locandina_1546942592.webp', 'Il Gladiatore', 2004, ['Historical', 'Adventure', 'Drama'], ['Action', 'Compelling']);
+    $il_gladiatore = createMovie(
+        'https://italyformovies.it/app/img/film/locandine/il_gladiatore_locandina_1546942592.webp',
+        'Il Gladiatore',
+        2004,
+        "Jon",
+        20,
+        ['Historical', 'Adventure', 'Drama'],
+        ['Action', 'Compelling'],
+    );
 } catch (Error $e) {
     echo $e->getMessage();
 }
 
 try {
-    $american_sniper = createMovie('https://pad.mymovies.it/filmclub/2014/10/026/locandina.jpg', 'American Sniper', 2002, ['Historical', 'Adventure', 'Drama'], ['Action', 'War']);
+    $american_sniper = createMovie(
+        'https://pad.mymovies.it/filmclub/2014/10/026/locandina.jpg',
+        'American Sniper',
+        2002,
+        "Jon",
+        20,
+        ['Historical', 'Adventure', 'Drama'],
+        ['Action', 'War'],
+    );
 } catch (Error $e) {
     echo 'Caught Error' . $e->getMessage();
 }
 
 try {
-    $troy = createMovie('https://m.media-amazon.com/images/M/MV5BMTk5MzU1MDMwMF5BMl5BanBnXkFtZTcwNjczODMzMw@@._V1_.jpg', 'Troy', 2001, ['Historical', 'Adventure', 'Drama'], ['Action', 'Adult']);
+    $troy = createMovie(
+        'https://m.media-amazon.com/images/M/MV5BMTk5MzU1MDMwMF5BMl5BanBnXkFtZTcwNjczODMzMw@@._V1_.jpg',
+        'Troy',
+        2001,
+        "Jon",
+        20,
+        ['Historical', 'Adventure', 'Drama'],
+        ['Action', 'Adult'],
+
+    );
 } catch (Error $e) {
     echo $e->getMessage();
 }
@@ -54,13 +88,15 @@ $movies = array_filter([$fight_club, $il_gladiatore, $american_sniper, $troy]);
                         <div class="card bg-dark border-0 text-light">
                             <div class="card-body">
                                 <div class="card-img mb-3">
-                                    <img src="<?php echo $movie->getMovieUrl() ?>" alt="<?php echo $movie->getMovieUrl() ?>">
+                                    <img src="<?php echo $movie->getMovieUrl() ?>" alt="<?php echo $movie->getMovieTitle() ?>">
                                 </div>
                                 <h5 class="card-title"><?php echo htmlspecialchars($movie->getMovieTitle(), ENT_QUOTES, 'UTF-8'); ?></h5>
-                                <h6 class="card-subtitle mb-2 text-light"><?php echo $movie->getMovieAnno(); ?>
-                                </h6>
+                                <h6 class="card-subtitle mb-2 text-light"><?php echo $movie->getMovieAnno(); ?></h6>
                                 <p class="card-text">
                                     <?php echo implode(', ', array_map('htmlspecialchars', $movie->getMovieGenere())); ?>
+                                </p>
+                                <p class="card-text">
+                                    Actor: <?php echo htmlspecialchars($movie->getActor()->getActorName(), ENT_QUOTES, 'UTF-8'); ?>, Age: <?php echo $movie->getActor()->getActorAge(); ?>
                                 </p>
                             </div>
                         </div>
