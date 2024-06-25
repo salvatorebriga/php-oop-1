@@ -28,9 +28,6 @@ try {
     echo $e->getMessage();
 }
 
-
-
-
 $movies = array_filter([$fight_club, $il_gladiatore, $american_sniper, $troy]);
 
 ?>
