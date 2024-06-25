@@ -4,6 +4,7 @@ class Actor
 {
     private string $name;
     private int $age;
+    private static string $race = 'Human';
 
     public function __construct(string $_name, int $_age)
     {
@@ -37,5 +38,10 @@ class Actor
     public function getActorAge(): int
     {
         return $this->age;
+    }
+
+    public function getActorRace()
+    {
+        return $this->race;
     }
 }
